@@ -9,10 +9,15 @@
 
 namespace PHPCfg;
 
+use \PhpParser\Node as AstNode;
+
 abstract class Op {
     
     protected $attributes = [];
     protected $writeVariables = [];
+
+    /** @var $astNode AstNode */
+    private $astNode;
 
     public function __construct(array $attributes = []) {
         $this->attributes = $attributes;
@@ -81,6 +86,24 @@ abstract class Op {
             return $op;
         }
         return $op->addWriteOp($this);
+    }
+
+	/**
+	 * @param AstNode $node
+	 * @throws \LogicException when an AST node was already connected
+	 */
+    public function linkAstNode(AstNode $node) {
+    	if ($this->astNode !== null) {
+    		throw new \LogicException("Op is already linked to an AST node");
+	    }
+	    $this->astNode = $node;
+    }
+
+	/**
+	 * @return AstNode
+	 */
+    public function getAstNode() {
+    	return $this->astNode;
     }
 
 }

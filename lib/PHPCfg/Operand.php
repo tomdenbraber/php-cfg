@@ -9,11 +9,16 @@
 
 namespace PHPCfg;
 
+use \PhpParser\Node as AstNode;
+
 abstract class Operand {
     public $type = null;
     public $assertions = [];
     public $ops = [];
     public $usages = [];
+
+    /** @var $astNode AstNode */
+    private $astNode;
 
     public function addUsage(Op $op) {
         foreach ($this->usages as $test) {
@@ -74,4 +79,23 @@ abstract class Operand {
         }
         $this->assertions[] = ["var" => $op, "assertion" => $assert];
     }
+
+	/**
+	 * @param AstNode $node
+	 * @throws \LogicException when an AST node was already connected
+	 */
+	public function linkAstNode(AstNode $node) {
+		if ($this->astNode !== null) {
+			throw new \LogicException("Op is already linked to an AST node");
+		}
+		$this->astNode = $node;
+	}
+
+	/**
+	 * @return AstNode
+	 */
+	public function getAstNode() {
+		return $this->astNode;
+	}
+
 }
