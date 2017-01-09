@@ -94,7 +94,8 @@ abstract class Op {
 	 */
     public function linkAstNode(AstNode $node) {
     	if ($this->astNode !== null) {
-    		throw new \LogicException("Op is already linked to an AST node");
+    		$currentASTNodeType = $node->getType();
+    		throw new \LogicException("Op is already linked to an AST node (" . $currentASTNodeType . ")");
 	    }
 	    $this->astNode = $node;
     }

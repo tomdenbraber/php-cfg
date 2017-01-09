@@ -86,7 +86,8 @@ abstract class Operand {
 	 */
 	public function linkAstNode(AstNode $node) {
 		if ($this->astNode !== null) {
-			throw new \LogicException("Op is already linked to an AST node");
+			$currentASTNodeType = $this->astNode->getType();
+			throw new \LogicException("Operand (temp) is already linked to an AST node (" . $currentASTNodeType . ")");
 		}
 		$this->astNode = $node;
 	}
