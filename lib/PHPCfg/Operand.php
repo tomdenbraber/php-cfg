@@ -17,8 +17,8 @@ abstract class Operand {
     public $ops = [];
     public $usages = [];
 
-    /** @var $astNode AstNode */
-    private $astNode;
+    /** @var $ast_nodes AstNode[] */
+    private $ast_nodes = [];
 
     public function addUsage(Op $op) {
         foreach ($this->usages as $test) {
@@ -82,21 +82,18 @@ abstract class Operand {
 
 	/**
 	 * @param AstNode $node
-	 * @throws \LogicException when an AST node was already connected
 	 */
 	public function linkAstNode(AstNode $node) {
-		if ($this->astNode !== null) {
-			$currentASTNodeType = $this->astNode->getType();
-			throw new \LogicException("Operand (temp) is already linked to an AST node (" . $currentASTNodeType . ")");
+		if (in_array($node, $this->ast_nodes, true) === false) {
+			$this->ast_nodes[] = $node;
 		}
-		$this->astNode = $node;
 	}
 
 	/**
-	 * @return AstNode
+	 * @return AstNode[]
 	 */
-	public function getAstNode() {
-		return $this->astNode;
+	public function getAstNodes() {
+		return $this->ast_nodes;
 	}
 
 }
