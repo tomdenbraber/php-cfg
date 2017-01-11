@@ -528,11 +528,8 @@ class Parser {
                 $defaultVar = $this->parseExprNode($var->default);
                 $this->block = $tmp;
             }
-	        $boundVariable = new Operand\BoundVariable($this->parseExprNode($var->name), true, Operand\BoundVariable::SCOPE_FUNCTION);
-	        $boundVariable->linkAstNode($node);
 	        $this->block->children[] = $staticVarOp = new Op\Terminal\StaticVar(
-                $this->writeVariable($boundVariable),
-                $defaultBlock,
+		        $this->writeVariable(new Operand\BoundVariable($this->parseExprNode($var->name), true, Operand\BoundVariable::SCOPE_FUNCTION)),                $defaultBlock,
                 $defaultVar,
                 $this->mapAttributes($node)
             );
