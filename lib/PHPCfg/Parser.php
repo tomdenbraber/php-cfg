@@ -667,7 +667,9 @@ class Parser {
     }
 
     protected function parseStmt_TryCatch(Stmt\TryCatch $node) {
-        // TODO: implement this!!!
+        // TODO: this is a dummy implementation, but it makes sure the statements in the try block are not left out
+	    // it just adds all the statements in the try-block to the current block.
+	    $this->parseNodes($node->stmts, $this->block);
     }
 
     protected function parseStmt_Unset(Stmt\Unset_ $node) {

@@ -1,0 +1,20 @@
+<?php
+try {
+	//parsed as normal statements
+	$a = 1;
+	echo $a;
+} catch (Exception $e) {
+	//ignored
+} finally {
+	//ignored
+}
+-----
+Block#1
+    Expr_Assign
+        var: Var#1<$a>
+        expr: LITERAL(1)
+        result: Var#2
+    Terminal_Echo
+        expr: Var#1<$a>
+    Terminal_Return
+        expr: LITERAL(1)
