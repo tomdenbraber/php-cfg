@@ -32,6 +32,7 @@ class OperandAstNodeLinker extends AbstractVisitor {
 			if (in_array($var_name, $discard_var_names, true) === true) {
 				continue;
 			}
+
 			$cfg_var_name = $var_name;
 			$ast_var_name = isset($sub_node_mapper[$var_name]) === false ? $var_name : $sub_node_mapper[$var_name];
 			$sub_node_names = $ast_node->getSubNodeNames();
@@ -74,6 +75,8 @@ class OperandAstNodeLinker extends AbstractVisitor {
 			foreach ($ast_entry as $ast_node) {
 				$this->linkOperandToASTNode($cfg_entry, $ast_node);
 			}
+		} else if (is_object($cfg_entry) && is_scalar($ast_entry)) {
+			// no need to do anything
 		} else {
 			throw new \RuntimeException("Wrong type(s): " . gettype($cfg_entry) . " and/or " . gettype($ast_entry) . "\n");
 		}
