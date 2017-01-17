@@ -40,7 +40,9 @@ class OperandAstNodeLinker extends AbstractVisitor {
 			if (($pos = array_search($ast_var_name, $sub_node_names, true)) !== false) {
 				$cfg_entry = $op->$cfg_var_name;
 				$ast_entry = $ast_node->{$sub_node_names[$pos]};
-				$this->linkOperandToASTNode($cfg_entry, $ast_entry);
+				if ($cfg_entry !== null && $ast_entry !== null) {
+					$this->linkOperandToASTNode($cfg_entry, $ast_entry);
+				}
 			}
 		}
 	}
