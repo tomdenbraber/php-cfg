@@ -13,6 +13,7 @@ use PHPCfg\Op\Expr\BinaryOp;
 use PHPCfg\Op\Expr\Cast;
 use PHPCfg\Op\Stmt\Jump;
 use PHPCfg\Op\Stmt\JumpIf;
+use PHPCfg\Op\Stmt\TraitUse;
 use PHPCfg\Op\Terminal\Return_;
 use PHPCfg\Operand\Literal;
 use PHPCfg\Operand\Temporary;
@@ -663,7 +664,12 @@ class Parser {
     }
 
     protected function parseStmt_TraitUse(Stmt\TraitUse $node) {
-        // TODO
+        $trait_use_op = new TraitUse(
+	        $this->parseExprNode($node->traits),
+	        $this->mapAttributes($node)
+        );
+        $trait_use_op->linkAstNode($node);
+		$this->block->children[] = $trait_use_op;
     }
 
     protected function parseStmt_TryCatch(Stmt\TryCatch $node) {

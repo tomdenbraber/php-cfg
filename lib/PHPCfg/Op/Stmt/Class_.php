@@ -10,11 +10,13 @@
 namespace PHPCfg\Op\Stmt;
 
 use PhpCfg\Block;
+use PHPCfg\Operand\Literal;
 
 class Class_ extends ClassLike {
     public $type;
     public $extends;
     public $implements;
+    public $uses;
 
     public function __construct($name, $type, $extends, array $implements, Block $stmts, array $attributes = []) {
         parent::__construct($name, $stmts, $attributes);
@@ -23,7 +25,11 @@ class Class_ extends ClassLike {
         $this->implements = $implements;
     }
 
+    public function addUse(Literal $use) {
+		$this->uses[] = $use;
+    }
+
     public function getVariableNames() {
-        return ['name', 'extends', 'implements'];
+        return ['name', 'extends', 'implements', 'uses'];
     }
 }
