@@ -29,6 +29,9 @@ class AstNodeToCfgNodesCollector extends AbstractVisitor {
 				$this->tryLinkOperandToAST($op->$variable_name);
 			} else if (is_array($op->$variable_name)) {
 				foreach ($op->$variable_name as $idx => $actual_var) {
+					if ($actual_var === null && $variable_name === "keys" && $op instanceof Op\Expr\Array_) {
+						continue;
+					}
 					$this->tryLinkOperandToAST($actual_var);
 				}
 			}
