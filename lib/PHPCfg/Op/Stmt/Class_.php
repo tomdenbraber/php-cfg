@@ -16,7 +16,7 @@ class Class_ extends ClassLike {
     public $type;
     public $extends;
     public $implements;
-    public $uses;
+    public $uses = [];
 
     public function __construct($name, $type, $extends, array $implements, Block $stmts, array $attributes = []) {
         parent::__construct($name, $stmts, $attributes);
