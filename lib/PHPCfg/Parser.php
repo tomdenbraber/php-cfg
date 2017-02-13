@@ -665,7 +665,7 @@ class Parser {
 
     protected function parseStmt_TraitUse(Stmt\TraitUse $node) {
         $trait_use_op = new TraitUse(
-	        $this->parseExprNode($node->traits),
+	        $this->parseExprList($node->traits),
 	        $this->mapAttributes($node)
         );
         $trait_use_op->linkAstNode($node);
