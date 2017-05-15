@@ -10,16 +10,25 @@
 namespace PHPCfg\Op\Stmt;
 
 use PhpCfg\Block;
+use PHPCfg\Operand\Literal;
 
 class Trait_ extends ClassLike {
 
-    public function __construct($name, Block $stmts, array $attributes = []) {
+	public $uses = [];
+
+
+	public function __construct($name, Block $stmts, array $attributes = []) {
         parent::__construct($name, $stmts, $attributes);
         $this->name = $this->addReadRef($name);
         $this->stmts = $stmts;
     }
 
+
+	public function addUse(Literal $use) {
+		$this->uses[] = $use;
+	}
+
     public function getVariableNames() {
-        return ['name'];
+        return ['name', 'uses'];
     }
 }
