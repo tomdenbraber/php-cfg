@@ -39,12 +39,16 @@ class MagicStringResolver extends NodeVisitorAbstract {
             switch (strtolower($node->toString())) {
                 case 'self':
                     if (!empty($this->classStack)) {
-                        return new Node\Name\FullyQualified(end($this->classStack), $node->getAttributes());
+	                    $name = new Node\Name\FullyQualified(end($this->classStack), $node->getAttributes());
+	                    $name->setAttribute("original callee name", "self");
+	                    return $name;
                     }
                     break;
                 case 'parent':
                     if (!empty($this->parentStack) && '' !== end($this->parentStack)) {
-                        return new Node\Name\FullyQualified(end($this->parentStack), $node->getAttributes());
+                        $name = new Node\Name\FullyQualified(end($this->parentStack), $node->getAttributes());
+	                    $name->setAttribute("original callee name", "parent");
+	                    return $name;
                     }
             }
         } elseif ($node instanceof Node\Scalar\MagicConst\Class_) {
