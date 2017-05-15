@@ -24,7 +24,7 @@ class TraitToClassLinker extends AbstractVisitor {
 			$this->currentClass = $op;
 		} else if ($op instanceof TraitUse) {
 			if ($this->currentClass === null) {
-				throw new LogicException("Cannot have a trait-use when no class is registered.");
+				throw new \LogicException(sprintf("Cannot have a trait-use when no class is registered (%s:%s)", $op->getFile(), $op->getLine()));
 			} else {
 				foreach ($op->traits as $trait_lit) {
 					$this->currentClass->addUse($trait_lit);
