@@ -1307,6 +1307,14 @@ class Parser {
 	    return $yieldOp;
     }
 
+    protected function parseExpr_YieldFrom (Expr\YieldFrom $expr) {
+    	//todo: this implementation might be incorrect concerning the control flow of the yield statement...
+    	$yield_from_expr = $this->readVariable($this->parseExprNode($expr->expr));
+    	$yieldFromOp = new Op\Expr\YieldFrom($yield_from_expr, $this->mapAttributes($expr));
+    	$yieldFromOp->linkAstNode($expr);
+    	return $yieldFromOp;
+    }
+
     protected function parseExpr_ShellExec(Expr\ShellExec $expr) {
         $this->block->children[] = $argOp = new Op\Expr\ConcatList(
             $this->parseExprList($expr->parts, self::MODE_READ),
